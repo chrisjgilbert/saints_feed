@@ -47,6 +47,14 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+config :saints_feed, SaintsFeed.Scheduler,
+  jobs: [
+    phoenix_job: [
+      schedule: "*/2 * * * *",
+      task: {SaintsFeed.SourceAdapters.DailyEcho, :run, []}
+    ]
+  ]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"
