@@ -1,16 +1,28 @@
 defmodule SaintsFeed.TestHelpers do
   alias SaintsFeed.News
+  alias SaintsFeed.News.Source
 
-  def story_fixture(attrs \\ %{}) do
-    {:ok, story} =
-      attrs
-      |> Enum.into(%{
+  def story_fixture(%Source{} = source, attrs \\ %{}) do
+    attrs =
+      Enum.into(attrs, %{
         title: "the title",
         description: "the description",
         link: "www.example.com"
       })
-      |> News.create_story()
+
+    {:ok, story} = News.create_story(source, attrs)
 
     story
+  end
+
+  def source_fixture(attrs \\ %{}) do
+    {:ok, source} =
+      attrs
+      |> Enum.into(%{
+        name: "the name"
+      })
+      |> News.create_source()
+
+    source
   end
 end

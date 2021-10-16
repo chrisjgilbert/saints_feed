@@ -7,9 +7,10 @@ defmodule SaintsFeed.News do
     |> Repo.all()
   end
 
-  def create_story(params) do
+  def create_story(%Source{} = source, params) do
     %Story{}
     |> Story.changeset(params)
+    |> Ecto.Changeset.put_assoc(:source, source)
     |> Repo.insert()
   end
 

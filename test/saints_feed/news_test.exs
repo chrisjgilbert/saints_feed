@@ -9,7 +9,8 @@ defmodule SaintsFeed.NewsTest do
     @invalid_parms %{title: "The title", description: "", link: "the link"}
 
     test "create_story/1 with valid params creates a story" do
-      {:ok, %Story{} = story} = News.create_story(@valid_params)
+      source = source_fixture()
+      {:ok, %Story{} = story} = News.create_story(source, @valid_params)
 
       assert story.title == @valid_params[:title]
       assert story.description == @valid_params[:description]
@@ -17,15 +18,16 @@ defmodule SaintsFeed.NewsTest do
     end
 
     test "create_story/1 with invalid data returns error changeset" do
-      {:error, %Ecto.Changeset{}} = News.create_story(@invalid_parms)
+      source = source_fixture()
+      {:error, %Ecto.Changeset{}} = News.create_story(source, @invalid_parms)
     end
 
     test "list_stories/0 returns a list of all stories" do
-      # source = source_fixture(name: "Daily Echo")
-      story_1 = story_fixture(title: "title 1")
-      story_2 = story_fixture(title: "title 2")
+      source = source_fixture()
+      %Story{id: id1} = story_fixture(source, title: "title 1")
+      %Story{id: id2} = story_fixture(source, title: "title 2")
 
-      assert [^story_1, ^story_2] = News.list_stories()
+      assert [%Story{id: ^id1}, %Story{id: ^id2}] = News.list_stories()
     end
   end
 
