@@ -5,6 +5,7 @@ defmodule SaintsFeed.News do
   def list_stories do
     Story
     |> Repo.all()
+    |> Repo.preload(:source)
   end
 
   def create_story(%Source{} = source, params) do

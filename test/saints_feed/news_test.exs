@@ -22,12 +22,13 @@ defmodule SaintsFeed.NewsTest do
       {:error, %Ecto.Changeset{}} = News.create_story(source, @invalid_parms)
     end
 
-    test "list_stories/0 returns a list of all stories" do
+    test "list_stories/0 returns a list of all stories with associated source preloaded" do
       source = source_fixture()
       %Story{id: id1} = story_fixture(source, title: "title 1")
       %Story{id: id2} = story_fixture(source, title: "title 2")
 
-      assert [%Story{id: ^id1}, %Story{id: ^id2}] = News.list_stories()
+      assert [%Story{id: ^id1, source: ^source}, %Story{id: ^id2, source: ^source}] =
+               News.list_stories()
     end
   end
 
