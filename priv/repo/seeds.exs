@@ -3,7 +3,7 @@
 #     mix run priv/repo/seeds.exs
 #
 
-stories = [
+daily_echo_stories = [
   %{
     title: "Alex McCarthy: It will be 'strange' to see no Ward-Prowse",
     description:
@@ -27,4 +27,5 @@ stories = [
   }
 ]
 
-Enum.each(stories, &SaintsFeed.News.create_story(&1))
+{:ok, daily_echo} = SaintsFeed.News.create_source(%{name: "The Daily Echo"})
+Enum.each(daily_echo_stories, &SaintsFeed.News.create_story(daily_echo, &1))
