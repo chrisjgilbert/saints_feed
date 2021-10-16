@@ -23,6 +23,7 @@ defmodule SaintsFeedWeb.ConnCase do
       import Plug.Conn
       import Phoenix.ConnTest
       import SaintsFeedWeb.ConnCase
+      import SaintsFeed.TestHelpers
 
       alias SaintsFeedWeb.Router.Helpers, as: Routes
 

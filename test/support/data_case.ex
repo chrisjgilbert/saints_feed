@@ -24,6 +24,7 @@ defmodule SaintsFeed.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import SaintsFeed.DataCase
+      import SaintsFeed.TestHelpers
     end
   end
 

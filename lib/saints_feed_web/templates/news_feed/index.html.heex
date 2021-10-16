@@ -1,1 +1,10 @@
-<h1>Welcome to Saints Feed!</h1>
+<ul>
+  <%= for story <- @stories do %>
+  <li>
+    <%= link to: story.link, target: "_blank" do %>
+      <%= story.title %>
+      <%= story.description %>
+    <% end %>
+  </li>
+  <% end %>
+</ul>
