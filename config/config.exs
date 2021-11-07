@@ -49,9 +49,13 @@ config :phoenix, :json_library, Jason
 
 config :saints_feed, SaintsFeed.Scheduler,
   jobs: [
-    phoenix_job: [
+    daily_echo: [
       schedule: "*/2 * * * *",
       task: {SaintsFeed.SourceAdapters.DailyEcho, :run, []}
+    ],
+    hampshire_live: [
+      schedule: "*/2 * * * *",
+      task: {SaintsFeed.SourceAdapters.HampshireLive, :run, []}
     ]
   ]
 
