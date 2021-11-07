@@ -2,9 +2,9 @@
   <%= for story <- @stories do %>
   <li>
     <%= link to: story.link, target: "_blank" do %>
+      <b><%= story.source.name %></b>
       <%= story.title %>
       <%= story.description %>
-      <%= story.source.name %>
     <% end %>
   </li>
   <% end %>

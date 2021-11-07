@@ -15,9 +15,25 @@ defmodule SaintsFeed.News do
     |> Repo.insert()
   end
 
+  def upsert_story(%Source{} = source, params) do
+    %Story{}
+    |> Story.changeset(params)
+    |> Ecto.Changeset.put_assoc(:source, source)
+    |> Repo.insert!(
+      on_conflict: [
+        set: [link: params[:link], description: params[:description], title: params[:title]]
+      ],
+      conflict_target: [:source_id, :source_guid]
+    )
+  end
+
   def create_source(params) do
     %Source{}
     |> Source.changeset(params)
     |> Repo.insert()
+  end
+
+  def get_source_by(opts) do
+    Repo.get_by(Source, opts)
   end
 end

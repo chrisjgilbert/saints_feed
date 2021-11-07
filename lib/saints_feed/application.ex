@@ -15,9 +15,10 @@ defmodule SaintsFeed.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: SaintsFeed.PubSub},
       # Start the Endpoint (http/https)
-      SaintsFeedWeb.Endpoint
+      SaintsFeedWeb.Endpoint,
       # Start a worker by calling: SaintsFeed.Worker.start_link(arg)
       # {SaintsFeed.Worker, arg}
+      SaintsFeed.Scheduler
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
