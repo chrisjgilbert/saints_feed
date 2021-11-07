@@ -27,6 +27,8 @@ defmodule SaintsFeed.SourceAdapters.DailyEcho do
     )
   end
 
+  # Refactor to upsert all stories at once
+  # https://hexdocs.pm/ecto/constraints-and-upserts.html
   defp insert_news_stories(stories) when length(stories) > 0 do
     Enum.each(stories, &insert_news_story/1)
   end

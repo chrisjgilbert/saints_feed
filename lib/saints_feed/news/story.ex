@@ -18,6 +18,9 @@ defmodule SaintsFeed.News.Story do
   def changeset(%Story{} = story, attrs) do
     story
     |> cast(attrs, [:title, :description, :link, :source_guid])
+    |> unique_constraint(:source_id_and_source_guid_index,
+      name: :unique_source_id_and_source_guid_index
+    )
     |> validate_required([:title, :description, :link])
   end
 end
