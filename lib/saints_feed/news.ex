@@ -20,4 +20,8 @@ defmodule SaintsFeed.News do
     |> Source.changeset(params)
     |> Repo.insert()
   end
+
+  def get_source_by(opts) do
+    Repo.get_by(Source, opts)
+  end
 end

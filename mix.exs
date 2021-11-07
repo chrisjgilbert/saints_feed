@@ -49,7 +49,9 @@ defmodule SaintsFeed.MixProject do
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:quantum, "~> 2.2"}
+      {:quantum, "~> 2.2"},
+      {:httpoison, "~> 1.8"},
+      {:sweet_xml, "~> 0.7.1"}
     ]
   end
 
