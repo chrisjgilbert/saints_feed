@@ -1,9 +1,12 @@
 defmodule SaintsFeed.News do
+  import Ecto.Query, only: [limit: 2]
+
   alias SaintsFeed.Repo
   alias SaintsFeed.News.{Story, Source}
 
   def list_stories do
     Story
+    |> limit(25)
     |> Repo.all()
     |> Repo.preload(:source)
   end
