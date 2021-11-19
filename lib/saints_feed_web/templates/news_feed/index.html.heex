@@ -1,10 +1,19 @@
 <ul>
   <%= for story <- @stories do %>
-  <li>
+  <li class="news-card">
     <%= link to: story.link, target: "_blank" do %>
-      <b><%= story.source.name %></b>
-      <%= story.title %>
-      <%= story.description %>
+      <div class="news-card__image-container">
+        <img class="news-card__image" src={Routes.static_path(@conn, image_path(story.source.name))} alt={story.source.name}>
+      </div>
+      <div class="news-card__content">
+        <div class="news-card__header">
+          <b><%= story.source.name %></b>
+          <span class="news-card__time"><%= time_from_now(story.inserted_at) %></span>
+        </div>
+        <div class="news-card__body">
+          <p><%= story.title %></p>
+        </div>
+      </div>
     <% end %>
   </li>
   <% end %>

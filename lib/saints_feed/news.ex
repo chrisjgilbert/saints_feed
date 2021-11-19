@@ -1,14 +1,22 @@
 defmodule SaintsFeed.News do
-  import Ecto.Query, only: [limit: 2]
+  import Ecto.Query
 
   alias SaintsFeed.Repo
   alias SaintsFeed.News.{Story, Source}
 
   def list_stories do
-    Story
-    |> limit(25)
-    |> Repo.all()
-    |> Repo.preload(:source)
+    query =
+      from(st in Story,
+        as: :stories,
+        inner_join: so in assoc(st, :source),
+        order_by: [desc: st.inserted_at],
+        limit: 25,
+        preload: [
+          source: so
+        ]
+      )
+
+    Repo.all(query)
   end
 
   def create_story(%Source{} = source, params) do
@@ -22,18 +30,13 @@ defmodule SaintsFeed.News do
     %Story{}
     |> Story.changeset(params)
     |> Ecto.Changeset.put_assoc(:source, source)
-    |> Repo.insert!(
-      on_conflict: [
-        set: [link: params[:link], description: params[:description], title: params[:title]]
-      ],
-      conflict_target: [:source_id, :source_guid]
-    )
+    |> Repo.insert!(on_conflict: :nothing)
   end
 
   def create_source(params) do
     %Source{}
     |> Source.changeset(params)
-    |> Repo.insert()
+    |> Repo.insert!(on_conflict: :nothing)
   end
 
   def get_source_by(opts) do

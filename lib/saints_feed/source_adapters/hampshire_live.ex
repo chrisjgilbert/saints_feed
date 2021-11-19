@@ -2,9 +2,10 @@ defmodule SaintsFeed.SourceAdapters.HampshireLive do
   import SweetXml
 
   alias SaintsFeed.News
+  alias SaintsFeed.SourceAdapters.Const
 
-  @name "Hampshire Live"
-  @url "https://www.hampshirelive.news/sport/?service=rss"
+  @name Const.hampshire_live()
+  @url Const.hampshite_live_feed()
 
   def run do
     get_feed!()

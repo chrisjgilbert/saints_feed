@@ -1,10 +1,11 @@
-defmodule SaintsFeed.SourceAdapters.DailyEcho do
+defmodule SaintsFeed.SourceAdapters.TheDailyEcho do
   import SweetXml
 
   alias SaintsFeed.News
+  alias SaintsFeed.SourceAdapters.Const
 
-  @name "The Daily Echo"
-  @url "https://www.dailyecho.co.uk/sport/saints/rss/"
+  @name Const.the_daily_echo()
+  @url Const.the_daily_echo_feed()
 
   def run do
     get_feed!()

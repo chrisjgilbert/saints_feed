@@ -56,6 +56,10 @@ config :saints_feed, SaintsFeed.Scheduler,
     hampshire_live: [
       schedule: "*/2 * * * *",
       task: {SaintsFeed.SourceAdapters.HampshireLive, :run, []}
+    ],
+    daily_mail: [
+      schedule: "*/2 * * * *",
+      task: {SaintsFeed.SourceAdapters.DailyMail, :run, []}
     ]
   ]
 
