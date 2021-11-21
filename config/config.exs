@@ -50,15 +50,15 @@ config :phoenix, :json_library, Jason
 config :saints_feed, SaintsFeed.Scheduler,
   jobs: [
     the_daily_echo: [
-      schedule: "*/2 * * * *",
+      schedule: "0 * * * *",
       task: {SaintsFeed.SourceAdapters.TheDailyEcho, :run, []}
     ],
     hampshire_live: [
-      schedule: "*/2 * * * *",
+      schedule: "0 * * * *",
       task: {SaintsFeed.SourceAdapters.HampshireLive, :run, []}
     ],
     daily_mail: [
-      schedule: "*/2 * * * *",
+      schedule: "0 * * * *",
       task: {SaintsFeed.SourceAdapters.DailyMail, :run, []}
     ]
   ]
