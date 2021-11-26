@@ -11,3 +11,4 @@ https://saints-feed.gigalixirapp.com/
 - [ ] Add unit tests for `SourceAdapter` modules.
 - [ ] Update existing unit tests.
 - [ ] Insert all news stories for a source adapter atomically rather than one at a time.
+- [ ] Create 1 job that runs all source adapter jobs, rather than defining each in individually `config/config.exs`.
