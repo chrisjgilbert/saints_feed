@@ -1,49 +1,42 @@
 defmodule SaintsFeed.SourceAdapters.DailyMail do
-  alias SaintsFeed.News
-  alias SaintsFeed.SourceAdapters.Const
+  alias SaintsFeed.SourceAdapters.{Const, SourceAdapter}
 
-  @name Const.daily_mail()
-  @url Const.daily_mail_feed()
+  use SourceAdapter,
+    name: Const.daily_mail(),
+    url: Const.daily_mail_feed()
 
-  def run do
-    get_feed!()
-    |> parse_feed()
-    |> upsert_news_stories()
-  end
+  @behaviour SourceAdapter
 
-  defp get_feed! do
-    HTTPoison.get!(@url).body
-  end
-
-  defp parse_feed(html) do
+  @impl SourceAdapter
+  def parse_feed(html) do
     case Floki.parse_document(html) do
       {:ok, document} ->
         parse_articles(document)
 
       _ ->
-        :error
+        []
     end
   end
 
   defp parse_articles(document) do
-    headline_article = parse_headline_article(document)
-    other_articles = parse_other_articles(document)
-    [headline_article | other_articles]
+    [parse_headline_article(document) | parse_other_articles(document)]
   end
 
+  @large_article_css_path ".football_team_news_wrapper .article.article-large"
   defp parse_headline_article(document) do
-    headline_article = Floki.find(document, ".football_team_news_wrapper .article.article-large")
-    [{"a", [{"href", path}], [title]}] = Floki.find(headline_article, "h2.linkro-darkred a")
+    headline_article = Floki.find(document, @large_article_css_path)
+    {path, title} = extract_path_and_title_from_article(headline_article)
     description = Floki.find(headline_article, "p.link-ccow.linkro-ccow)") |> Floki.text()
 
     format_article(title, path, description)
   end
 
+  @small_article_css_path ".football_team_news_wrapper .article.article-small"
   defp parse_other_articles(document) do
-    articles = Floki.find(document, ".football_team_news_wrapper .article.article-small")
+    articles = Floki.find(document, @small_article_css_path)
 
     for article <- articles do
-      [{"a", [{"href", path}], [title]}] = Floki.find(article, "h2.linkro-darkred a")
+      {path, title} = extract_path_and_title_from_article(article)
       description = Floki.find(article, "p)") |> Floki.text()
 
       format_article(title, path, description)
@@ -60,15 +53,10 @@ defmodule SaintsFeed.SourceAdapters.DailyMail do
     }
   end
 
-  defp upsert_news_stories(stories) when length(stories) > 0 do
-    Enum.each(stories, &upsert_news_story/1)
-  end
+  @link_and_title_css_path "h2.linkro-darkred a"
+  defp extract_path_and_title_from_article(article) do
+    [{"a", [{"href", path}], [title]}] = Floki.find(article, @link_and_title_css_path)
 
-  defp upsert_news_story(story) do
-    News.upsert_story(source(), story)
-  end
-
-  defp source do
-    News.get_source_by(name: @name)
+    {path, title}
   end
 end
