@@ -6,7 +6,7 @@ Lots of duplicated code & no tests at this stage 🤷
 
 https://saints-feed.gigalixirapp.com/
 
-## TODOs:
+## TODOs
 
 - [ ] Add unit tests for `SourceAdapter` modules.
 - [ ] Update existing unit tests.
