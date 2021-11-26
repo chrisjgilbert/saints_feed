@@ -1,12 +1,4 @@
 defmodule SaintsFeed.SourceAdapters.Const do
-  def adapters do
-    [
-      daily_mail(),
-      the_daily_echo(),
-      hampshire_live()
-    ]
-  end
-
   def daily_mail, do: "Daily Mail"
   def daily_mail_feed, do: "https://www.dailymail.co.uk/sport/teampages/southampton.html"
 
@@ -15,4 +7,7 @@ defmodule SaintsFeed.SourceAdapters.Const do
 
   def hampshire_live, do: "Hampshire Live"
   def hampshite_live_feed, do: "https://www.hampshirelive.news/sport/?service=rss"
+
+  def sky_sports, do: "Sky Sports"
+  def sky_sports_feed, do: "https://www.skysports.com/southampton-news"
 end

@@ -6,6 +6,13 @@
 alias SaintsFeed.News
 alias SaintsFeed.SourceAdapters.Const
 
-for adapter <- Const.adapters() do
+adapters = [
+  Const.daily_mail(),
+  Const.the_daily_echo(),
+  Const.hampshire_live(),
+  Const.sky_sports()
+]
+
+for adapter <- adapters do
   News.create_source(%{name: adapter})
 end

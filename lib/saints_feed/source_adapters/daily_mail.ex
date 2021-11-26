@@ -25,10 +25,14 @@ defmodule SaintsFeed.SourceAdapters.DailyMail do
   @large_article_css_path ".football_team_news_wrapper .article.article-large"
   defp parse_headline_article(document) do
     headline_article = Floki.find(document, @large_article_css_path)
-    {path, title} = extract_path_and_title_from_article(headline_article)
-    description = Floki.find(headline_article, "p.link-ccow.linkro-ccow)") |> Floki.text()
 
-    format_article(title, path, description)
+    {path, title} = extract_path_and_title_from_article(headline_article)
+
+    description =
+      Floki.find(headline_article, "p.link-ccow.linkro-ccow)")
+      |> Floki.text()
+
+    build_article(title, path, description)
   end
 
   @small_article_css_path ".football_team_news_wrapper .article.article-small"
@@ -37,14 +41,17 @@ defmodule SaintsFeed.SourceAdapters.DailyMail do
 
     for article <- articles do
       {path, title} = extract_path_and_title_from_article(article)
-      description = Floki.find(article, "p)") |> Floki.text()
 
-      format_article(title, path, description)
+      description =
+        Floki.find(article, "p)")
+        |> Floki.text()
+
+      build_article(title, path, description)
     end
   end
 
   @daily_mail_link_prefix "https://www.dailymail.co.uk"
-  defp format_article(title, path, description) do
+  defp build_article(title, path, description) do
     %{
       title: "#{String.trim(title)}.",
       description: String.trim(description),

@@ -60,6 +60,10 @@ config :saints_feed, SaintsFeed.Scheduler,
     daily_mail: [
       schedule: "0 * * * *",
       task: {SaintsFeed.SourceAdapters.DailyMail, :run, []}
+    ],
+    sky_sports: [
+      schedule: "0 * * * *",
+      task: {SaintsFeed.SourceAdapters.SkySports, :run, []}
     ]
   ]
 
