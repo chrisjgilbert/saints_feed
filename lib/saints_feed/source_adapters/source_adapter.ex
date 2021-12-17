@@ -23,6 +23,7 @@ defmodule SaintsFeed.SourceAdapters.SourceAdapter do
         Enum.each(stories, &upsert_news_story/1)
       end
 
+      # TODO: this should be an insert all
       defp upsert_news_story(story) do
         News.upsert_story(source(), story)
       end
